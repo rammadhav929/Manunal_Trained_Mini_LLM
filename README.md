@@ -48,7 +48,7 @@ The fine-tuned LLM processes the augmented prompt. Using `top_p` and `temperatur
 1.  **Clone the repository:**
     ```bash
     git clone [https://github.com/yourusername/rag-project.git](https://github.com/yourusername/rag-project.git)
-    cd rag-project
+    cd rag-pr
     ```
 2.  **Set up Virtual Environment:**
     ```bash
@@ -61,7 +61,7 @@ The fine-tuned LLM processes the augmented prompt. Using `top_p` and `temperatur
     ```
 4.  **Run the RAG system:**
     ```bash
-    python rag.py
+    python llm.py
     ```
 
 ---
@@ -73,7 +73,3 @@ The fine-tuned LLM processes the augmented prompt. Using `top_p` and `temperatur
 
 ---
 
-## 🎯 Future Roadmap
-* Implement **Sliding Window Chunking** with overlap to preserve context at boundaries.
-* Deploy a **Gradio Web UI** for a more interactive user experience.
-* Experiment with **Quantization (8-bit)** to further reduce memory usage.
