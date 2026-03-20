@@ -1,75 +1,61 @@
-# 🤖 Custom GPT-2 RAG: Fine-Tuned WikiText-2 Assistant
+# Mini GPT Language Model Training (Educational Project)
 
-This repository contains a complete **Retrieval-Augmented Generation (RAG)** pipeline. It features a custom-configured **GPT-2** model fine-tuned on the WikiText-2 dataset, integrated with a **FAISS** vector database for context-aware question answering.
+## Overview
+This project demonstrates training a **small GPT-style causal language model from scratch** using the Hugging Face Transformers Trainer API.
 
+The objective of this repository is to understand the **end-to-end LLM training pipeline**, including tokenization, custom model configuration, training workflow, and checkpoint management.
 
-
----
-
-## 🚀 Key Features
-* **Custom Fine-Tuning:** GPT-2 model trained on `wikitext-2-raw-v1` using the Hugging Face `Trainer` API.
-* **Vector Search:** Integrated **FAISS** (Facebook AI Similarity Search) for high-speed document retrieval.
-* **Optimized Context Window:** Implemented **recursive chunking** and **prompt truncation** to handle GPT-2's 1024-token limitation.
-* **Semantic Embeddings:** Uses `all-MiniLM-L6-v2` from Sentence-Transformers to map queries to document context.
+> ⚠️ This model is intentionally small and trained on limited data. It is built for learning purposes and is not intended for production usage.
 
 ---
 
-## 🛠️ Tech Stack
-| Component | Technology |
-| :--- | :--- |
-| **Language Model** | GPT-2 (Fine-tuned) |
-| **Retriever** | FAISS (L2 Distance) |
-| **Embeddings** | Sentence-Transformers (`all-MiniLM-L6-v2`) |
-| **Frameworks** | PyTorch, Hugging Face Transformers, Datasets |
-| **Data** | WikiText-2 Raw |
+## Learning Objectives
+
+- Understand causal language modeling (next-token prediction)
+- Configure a custom GPT architecture
+- Use Hugging Face Trainer API for training
+- Handle tokenization, padding, and batching
+- Manage training checkpoints and model saving
+- Observe hardware impact (CPU vs GPU training)
 
 ---
 
-## 📖 How It Works
+## Model Architecture
 
-### 1. Training Phase
-The model is a custom GPT-2 configuration ($L=6, H=6, E=384$) designed to be lightweight. It was fine-tuned for **2 epochs** to adopt a formal, encyclopedic linguistic style suitable for technical queries.
-
-### 2. Retrieval Phase
-When a user submits a query:
-1.  **Embedding:** The query is converted into a 384-dimensional vector.
-2.  **Search:** FAISS identifies the `Top-K` most relevant text chunks from the indexed documents.
-3.  **Augmentation:** These chunks are injected into a structured prompt: `Context: ... Question: ... Answer:`.
-
-### 3. Generation Phase
-The fine-tuned LLM processes the augmented prompt. Using `top_p` and `temperature` sampling, it generates a coherent answer based strictly on the retrieved data.
-
-
+- Architecture: GPT-style Transformer (trained from scratch)
+- Context Window: **256 tokens**
+- Embedding Dimension: **384**
+- Transformer Layers: **6**
+- Attention Heads: **6**
+- Training Objective: **Causal Language Modeling**
 
 ---
 
-## ⚙️ Installation & Usage
+## Dataset
 
-1.  **Clone the repository:**
-    ```bash
-    git clone [https://github.com/yourusername/rag-project.git](https://github.com/yourusername/rag-project.git)
-    cd rag-pr
-    ```
-2.  **Set up Virtual Environment:**
-    ```bash
-    python -m venv venv
-    .\venv\Scripts\activate
-    ```
-3.  **Install dependencies:**
-    ```bash
-    pip install torch transformers datasets faiss-cpu sentence-transformers accelerate
-    ```
-4.  **Run the RAG system:**
-    ```bash
-    python llm.py
-    ```
+- **WikiText-2 Raw**
+- Public benchmark dataset commonly used for language modeling experiments  
+- Small dataset suitable for educational training runs
 
 ---
 
-## 🧠 Challenges Overcome
-* **Context Window Limits:** Resolved `IndexError: index out of range` by implementing a hard-limit truncation at the tokenizer level (1024 tokens).
-* **Windows Multiprocessing:** Wrapped the training loop in `if __name__ == "__main__":` to ensure compatibility with Windows process spawning.
-* **Resource Optimization:** Reduced GPT-2 layers from 12 to 6 to allow for successful training on consumer-grade CPU hardware.
+## Training Configuration
+
+- Framework: **PyTorch + Hugging Face Transformers**
+- Trainer API used for training loop abstraction
+- Epochs: **2**
+- Batch Size: **8**
+- Mixed Precision: Enabled when CUDA is available
+- Periodic checkpoint saving enabled
 
 ---
 
+## Hardware Notes
+
+- Designed to run on **CPU or low-VRAM GPUs (e.g., GTX 1650)**
+- Training on CPU is significantly slower
+- Model size and context window were kept small due to hardware limitations
+
+---
+
+## Repository Structure
