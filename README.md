@@ -1,5 +1,4 @@
-# Mini GPT Language Model Training (Educational Project)
-
+# Mini GPT Language Model Training (Educational Project) 1
 ## Overview
 This project demonstrates training a **small GPT-style causal language model from scratch** using the Hugging Face Transformers Trainer API.
 
